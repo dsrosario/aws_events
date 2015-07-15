@@ -1,6 +1,6 @@
 {application, aws_events,
  [
-  {description, ""},
+  {description, "AWS SQS event logger"},
   {vsn, "1"},
   {registered, []},
   {applications, [

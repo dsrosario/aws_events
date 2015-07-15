@@ -13,4 +13,4 @@ start(_StartType, _StartArgs) ->
     aws_events_sup:start_link().
 
 stop(_State) ->
-    ok.
+    aws_events_sup:stop().
