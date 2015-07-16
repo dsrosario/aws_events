@@ -1,0 +1,17 @@
+{  
+   "event_type":"purchase",
+   "source":"mobile",
+   "time":12342353,
+   "user_id":10,
+   "ip_address":"192.168.1.1",
+   "event_data":[  
+      {  
+         "name":"product",
+         "value":"coinpack"
+      },
+      {  
+         "name":"promotion-code",
+         "value":"PROMO1"
+      }
+   ]
+}
