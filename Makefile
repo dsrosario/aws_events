@@ -1,8 +1,7 @@
-all: deps
+all: deps app
 
 deps:
 	rebar get-deps
-	rebar compile
 
 app:
 	rebar compile
