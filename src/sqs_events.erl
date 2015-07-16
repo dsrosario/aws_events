@@ -1,7 +1,7 @@
 -module(sqs_events).
 -export([init/0, init/1, decode/1]).
 -include("egeoip.hrl").
--include("sqs_events.hrl").
+-include("sqs_event.hrl").
 
 -compile(export_all).
 
@@ -30,8 +30,8 @@ decode(Json) ->
 	IpAddress = proplists:get_value(<<"ip_address">>, DecodedJson),
 	{ok, GeoIp} = egeoip:lookup(binary:bin_to_list(IpAddress)),
 	DataList = proplists:get_value(<<"event_data">>, DecodedJson),
-	#sqs_event{type=translate_event_type(Type), 
-		source=translate_source(Source), 
+	#sqs_event{type=translate_event_type(Type),
+		source=translate_source(Source),
 		time=Time,
 		user_id=UserId,
 		longitude=GeoIp#geoip.longitude,
@@ -47,7 +47,7 @@ validate(Json) ->
 
 
 translate_event_type(T) ->
-	case T of 
+	case T of
 		<<"session">> -> session;
 		<<"purchase">> -> purchase
 	end.
