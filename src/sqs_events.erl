@@ -46,17 +46,11 @@ validate(Json) ->
 	jesse:validate(aws_events, Decoded).
 
 
-translate_event_type(T) ->
-	case T of
-		<<"session">> -> session;
-		<<"purchase">> -> purchase
-	end.
+translate_event_type(<<"session">>) -> session;
+translate_event_type(<<"purchase">>) -> purchase.
 
-translate_source(S) ->
-	case S of
-		<<"web">> -> web;
-		<<"mobile">> -> mobile
-	end.
+translate_source(<<"web">>) -> web;
+translate_source(<<"mobile">>) -> mobile.
 
 translate_data_elem(PropList) ->
 	Name = proplists:get_value(<<"name">>, PropList),
