@@ -10,6 +10,7 @@
 %% ===================================================================
 
 start(_StartType, _StartArgs) ->
+    lager:start(),
     aws_events_sup:start_link().
 
 stop(_State) ->
