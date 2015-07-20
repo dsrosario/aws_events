@@ -7,6 +7,9 @@
 -define(TIMEOUT, 1000).
 
 %EXTERNAL API
+start_link() ->
+  gen_fsm:start_link(?MODULE, [], []).
+  
 start_link([AWSAccessKeyId, AWSSecretKey, AWSHost]) ->
   gen_fsm:start_link(?MODULE, [AWSAccessKeyId, AWSSecretKey, AWSHost], []).
 
@@ -14,7 +17,11 @@ delete_message(Pid, Handle) ->
   gen_fsm:send_event(Pid, {delete, Handle}).
 
 %GEN FSM functions
-
+init([]) ->
+  {ok, AWSAccessId} = application:get_env(aws_events, aws_access),
+  {ok, AWSSecret} = application:get_env(aws_events, aws_secret),
+  {ok, AWSHost} = application:get_env(aws_events, aws_host),
+  init([AWSAccessId, AWSSecret, AWSHost]);
 init([AWSAccessKeyId, AWSSecretKey, AWSHost]) ->
   ok = sqs_events:init(),
   ssl:start(),
@@ -34,7 +41,7 @@ handle_info(_, read_queue, Queue) ->
 
 read_queue({delete, Handle}, Queue) ->
   erlcloud_sqs:delete_message(Queue, Handle),
-  {next_state, read_queue, Queue, ?TIMEOUT};  
+  {next_state, read_queue, Queue, ?TIMEOUT};
 read_queue(timeout, Queue) ->
   receive_and_dispatch_message(Queue),
 

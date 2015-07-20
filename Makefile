@@ -14,5 +14,8 @@ clean:
 
 distclean: clean
 	rebar delete-deps
+	
+shell:
+	erl -pa ebin -pa deps/*/ebin -config aws_events.config
 
 .PHONY: all deps app tests clean distclean

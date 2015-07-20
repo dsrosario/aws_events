@@ -19,7 +19,6 @@ start_link() ->
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 stop() ->
-    io:format("Bye bye... ~n"),
     ok.
 
 %% ===================================================================
@@ -27,6 +26,23 @@ stop() ->
 %% ===================================================================
 
 init([]) ->
-    io:format("Running....~n"),
-    {ok, { {one_for_one, 5, 10}, []} }.
-
+    {ok, { {one_for_all, 5, 10},
+          [
+            {event_dispatcher,
+             {event_dispatcher, start_link, []},
+             permanent,
+             5000,
+             worker,
+             dynamic
+             }
+             ,
+             {
+              sqs_reader,
+              {sqs_reader, start_link, []},
+              permanent,
+              5000,
+              worker,
+              dynamic
+             }
+          ]}
+    }.
