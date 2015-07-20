@@ -9,7 +9,7 @@
 %EXTERNAL API
 start_link() ->
   gen_fsm:start_link(?MODULE, [], []).
-  
+
 start_link([AWSAccessKeyId, AWSSecretKey, AWSHost]) ->
   gen_fsm:start_link(?MODULE, [AWSAccessKeyId, AWSSecretKey, AWSHost], []).
 
@@ -20,7 +20,7 @@ delete_message(Pid, Handle) ->
 init([]) ->
   {ok, AWSAccessId} = application:get_env(aws_events, aws_access),
   {ok, AWSSecret} = application:get_env(aws_events, aws_secret),
-  {ok, AWSHost} = application:get_env(aws_events, aws_host),
+  {ok, AWSHost} = application:get_env(aws_events, aws_sqs_host),
   init([AWSAccessId, AWSSecret, AWSHost]);
 init([AWSAccessKeyId, AWSSecretKey, AWSHost]) ->
   ok = sqs_events:init(),
