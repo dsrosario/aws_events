@@ -9,6 +9,7 @@ record_to_proplist(Event = #sqs_event{}) ->
 
 convert_to_list(undefined) -> [];
 convert_to_list(Value) when is_list(Value) -> Value;
+convert_to_list(Value) when is_float(Value) -> float_to_list(Value, [{decimals, 3}, compact]);
 convert_to_list(Value) when is_integer(Value) -> integer_to_list(Value);
 convert_to_list(Value) when is_atom(Value) -> atom_to_list(Value);
 convert_to_list(Value) when is_binary(Value) -> binary_to_list(Value).
