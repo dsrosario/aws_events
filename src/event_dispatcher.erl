@@ -8,8 +8,8 @@
 start_link() ->
   {ok, Pid} = gen_event:start_link(),
   register(event_dispatcher, Pid),
-  gen_event:add_handler(Pid, event_writer, session),
-  gen_event:add_handler(Pid, event_writer, purchase),
+  gen_event:add_handler(Pid, event_file_writer, session),
+  gen_event:add_handler(Pid, event_file_writer, purchase),
   gen_event:add_handler(Pid, bad_event, []),
   gen_event:add_handler(Pid, ?MODULE, []),
   {ok, Pid}.

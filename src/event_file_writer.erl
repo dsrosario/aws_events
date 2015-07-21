@@ -1,4 +1,4 @@
--module(event_writer).
+-module(event_file_writer).
 -behaviour(gen_event).
 
 -compile(export_all).
