@@ -37,11 +37,11 @@ init([]) ->
              }
              ,
              {
-              sqs_reader,
-              {sqs_reader, start_link, []},
+              sqs_reader_sup,
+              {sqs_reader_sup, start_link, []},
               permanent,
               5000,
-              worker,
+              supervisor,
               dynamic
              }
           ]}

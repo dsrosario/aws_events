@@ -11,10 +11,12 @@ init([]) ->
 handle_event({_SQSReader, Bad = #sqs_invalid_message{}}, State) ->
   lager:error(
 "Invalid message received!
+  Queue=~p
   Body=~p
   Handle=~p
   Id=~p~n",
-[Bad#sqs_invalid_message.raw_message,
+[Bad#sqs_invalid_message.queue,
+ Bad#sqs_invalid_message.raw_message,
  Bad#sqs_invalid_message.receipt_handle,
  Bad#sqs_invalid_message.message_id]),
   {ok, State};
