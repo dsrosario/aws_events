@@ -27,4 +27,4 @@ print(Config, Event = #sqs_event{}) ->
 stream(Config, Event = #sqs_event{}) ->
   EventPropList = record_to_proplist(Event),
   List = [{Name, get_element(Field, EventPropList)} || {Field, Name} <- Config],
-  jsx:encode(List).
+  binary_to_list(jsx:encode(List)).

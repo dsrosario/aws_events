@@ -9,13 +9,14 @@ init([]) ->
   {ok, []}.
 
 handle_event({_SQSReader, Bad = #sqs_invalid_message{}}, State) ->
-  error_logger:error_msg("Invalid message received!
-                          Body=~p
-                          Handle=~p
-                          Id=~p~n",
-                          [Bad#sqs_invalid_message.raw_message,
-                          Bad#sqs_invalid_message.receipt_handle,
-                          Bad#sqs_invalid_message.message_id]),
+  lager:error(
+"Invalid message received!
+  Body=~p
+  Handle=~p
+  Id=~p~n",
+[Bad#sqs_invalid_message.raw_message,
+ Bad#sqs_invalid_message.receipt_handle,
+ Bad#sqs_invalid_message.message_id]),
   {ok, State};
 handle_event({_SQSReader, #sqs_event_message{}}, State) ->
   {ok, State};

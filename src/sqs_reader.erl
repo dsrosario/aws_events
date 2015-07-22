@@ -27,7 +27,8 @@ init([AWSAccessKeyId, AWSSecretKey, AWSHost]) ->
   ssl:start(),
   erlcloud:start(),
   ok = erlcloud_sqs:configure(AWSAccessKeyId, AWSSecretKey, AWSHost),
-  [Queue] = erlcloud_sqs:list_queues(),
+  [Queue|_] = erlcloud_sqs:list_queues(),
+  lager:info("SQS queue:~p",[Queue]),
   {ok, read_queue, Queue, 10}.
 
 handle_event(_, _, Queue) ->

@@ -13,8 +13,10 @@ init([]) ->
 handle_event({_SQSReader,
               EventMessage = #sqs_event_message{event = #sqs_event{}}},
               StreamFormat) ->
-  Format = proplists:get_value(EventMessage#sqs_event_message.event#sqs_event.type, StreamFormat),
-  io:format("~p~n", [event_print:stream(Format, EventMessage#sqs_event_message.event)]),
+  Event = EventMessage#sqs_event_message.event,
+  EventType = Event#sqs_event.type,
+  Format = proplists:get_value(EventType, StreamFormat),
+  lager:info("ws event ~p : ~p", [EventType, event_print:stream(Format, Event)]),
   {ok, StreamFormat};
 handle_event(_, ConfigData) ->
   {ok, ConfigData}.
