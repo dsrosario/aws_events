@@ -26,7 +26,9 @@ start() ->
 			WebsocketEndpoints
 		}
 	]),
-	cowboy:start_http(http, 100, [{port, 8080}],
+	{ok, HttpPort} = application:get_env(aws_events, http_port),
+	lager:info("Http port = ~p", [HttpPort]),
+	cowboy:start_http(http, 100, [{port, HttpPort}],
 		[{env, [{dispatch, Dispatch}]}]).
 
 stop() ->
