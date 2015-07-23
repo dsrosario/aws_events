@@ -41,8 +41,7 @@ terminate(_Reason, Config = #writer_config{}) ->
   file:close(Config#writer_config.file_handle),
   ok.
 
-type_2_filename(session) -> "session.csv";
-type_2_filename(purchase) -> "purchase.csv".
+type_2_filename(Type) when is_atom(Type) -> atom_to_list(Type) ++ ".csv".
 
 check_file_size(FileSize, Config = #writer_config{}) when FileSize >= Config#writer_config.max_file_size ->
   lager:info("~p reach max file size of ~p", [Config#writer_config.file_name, Config#writer_config.max_file_size]),

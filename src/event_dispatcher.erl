@@ -7,13 +7,18 @@
 %EXTERNAL API
 start_link() ->
   {ok, Pid} = gen_event:start_link(),
-  register(event_dispatcher, Pid),
+  erlang:register(event_dispatcher, Pid),
   gen_event:add_handler(Pid, event_file_writer, session),
   gen_event:add_handler(Pid, event_file_writer, purchase),
-  gen_event:add_handler(Pid, event_stream_writer, []),
   gen_event:add_handler(Pid, bad_event, []),
   gen_event:add_handler(Pid, ?MODULE, []),
   {ok, Pid}.
+
+register(Module, Args) ->
+  gen_event:add_handler(whereis(event_dispatcher), Module, Args).
+
+unregister(Module, Args) ->
+  gen_event:delete_handler(whereis(event_dispatcher), Module, Args).
 
 dispatch(SQSEvent = #sqs_event_message{}) ->
   gen_event:notify(whereis(event_dispatcher), {self(), SQSEvent});
