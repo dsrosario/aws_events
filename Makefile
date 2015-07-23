@@ -15,7 +15,10 @@ clean:
 distclean: clean
 	rebar delete-deps
 	
+release:
+	rebar generate
+	
 shell:
 	erl -pa ebin -pa deps/*/ebin -config aws_events.config -s aws_events
 
-.PHONY: all deps app tests clean distclean
+.PHONY: all deps app tests clean distclean release shell
