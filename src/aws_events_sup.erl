@@ -34,8 +34,14 @@ init([]) ->
              5000,
              worker,
              dynamic
-             }
-             ,
+             },
+             {s3_uploader,
+              {s3_uploader, start_link, []},
+              permanent,
+              5000,
+              worker,
+              dynamic
+              },
              {
               sqs_reader_sup,
               {sqs_reader_sup, start_link, []},

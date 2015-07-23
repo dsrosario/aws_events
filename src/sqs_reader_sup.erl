@@ -39,7 +39,7 @@ init([]) ->
   {ok, AWSHost} = application:get_env(aws_events, aws_sqs_host),
   {ok, QueueList} = application:get_env(aws_events, aws_sqs_queues),
   AWSQueues = get_queues(AWSAccessId, AWSSecret, AWSHost, QueueList),
-  lager:info("Queue list: ~p", AWSQueues),
+  lager:info("Queue list: ~p", [string:join(AWSQueues, ", ")]),
   Procs = [
     {
        {sqs_reader, make_ref()},
