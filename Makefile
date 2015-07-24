@@ -1,22 +1,22 @@
 all: deps app
 
 deps:
-	rebar get-deps
+	./rebar get-deps
 
 app:
-	rebar compile
+	./rebar compile
 
 tests:
-	rebar eunit
+	./rebar eunit
 
 clean:
-	rebar clean
+	./rebar clean
 
 distclean: clean
-	rebar delete-deps
+	./rebar delete-deps
 	
 release:
-	rebar generate
+	./rebar generate
 	
 shell:
 	erl -pa ebin -pa deps/*/ebin -config aws_events.config
