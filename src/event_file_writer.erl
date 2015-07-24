@@ -1,10 +1,11 @@
 -module(event_file_writer).
 -behaviour(gen_event).
 
--compile(export_all).
-
 -include("sqs_message.hrl").
 -include("sqs_event.hrl").
+
+%gen_event handler behaviour
+-export([init/1, handle_event/2, handle_call/2, handle_info/2, code_change/3, terminate/2]).
 
 -record(writer_config, {file_handle, fields, max_file_size, file_name}).
 
@@ -41,7 +42,8 @@ terminate(_Reason, Config = #writer_config{}) ->
   file:close(Config#writer_config.file_handle),
   ok.
 
-type_2_filename(Type) when is_atom(Type) -> atom_to_list(Type) ++ ".csv".
+%internal functions
+type_2_filename(Atom) when is_atom(Atom) -> atom_to_list(Atom) ++ ".csv".
 
 check_file_size(FileSize, Config = #writer_config{}) when FileSize >= Config#writer_config.max_file_size ->
   lager:info("~p reach max file size of ~p", [Config#writer_config.file_name, Config#writer_config.max_file_size]),

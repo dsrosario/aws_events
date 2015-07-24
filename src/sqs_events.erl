@@ -3,8 +3,6 @@
 -include("egeoip.hrl").
 -include("sqs_event.hrl").
 
--compile(export_all).
-
 %%% API
 
 %% Init module

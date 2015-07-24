@@ -1,6 +1,7 @@
 -module(sqs_reader).
 -behaviour(gen_fsm).
--compile(export_all).
+-export([start_link/4, delete_message/2]).
+-export([init/1, handle_event/3, handle_sync_event/4, handle_info/3, read_queue/2, code_change/4, terminate/3]).
 
 -include("sqs_message.hrl").
 

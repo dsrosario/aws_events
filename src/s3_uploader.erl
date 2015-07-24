@@ -1,6 +1,11 @@
 -module (s3_uploader).
 -behaviour(gen_event).
--compile(export_all).
+
+%API
+-export([start_link/0, upload/1, stop/0]).
+
+%gen_event handler behaviour
+-export([init/1, handle_event/2, handle_call/2, handle_info/2, code_change/3, terminate/2]).
 
 %EXTERNAL API
 start_link() ->
@@ -19,7 +24,8 @@ stop() ->
 init([]) ->
   {ok, AWSAccessId} = application:get_env(aws_events, aws_access),
   {ok, AWSSecret} = application:get_env(aws_events, aws_secret),
-  erlcloud_s3:configure(AWSAccessId, AWSSecret),
+  {ok, AWSHost} = application:get_env(aws_events, aws_s3_host),
+  erlcloud_s3:configure(AWSAccessId, AWSSecret, AWSHost),
   {ok, Bucket} = application:get_env(aws_events, aws_s3_bucket),
   %%if bucket doesn't exist, this process fail here!
   lager:info("Getting info from S3 bucket ~p", [Bucket]),

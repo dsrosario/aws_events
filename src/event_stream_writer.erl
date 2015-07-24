@@ -1,7 +1,8 @@
 -module(event_stream_writer).
 -behaviour(gen_event).
 
--compile(export_all).
+%gen_event handler behaviour
+-export([init/1, handle_event/2, handle_call/2, handle_info/2, code_change/3, terminate/2]).
 
 -include("sqs_message.hrl").
 -include("sqs_event.hrl").

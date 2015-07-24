@@ -1,6 +1,5 @@
 -module(event_print).
--compile(export_all).
-
+-export([print/2, stream/2]).
 -include("sqs_event.hrl").
 
 record_to_proplist(Event = #sqs_event{}) ->
