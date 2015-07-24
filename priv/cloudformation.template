@@ -1,0 +1,14 @@
+{
+	"Description" : "Miniclip chalenge",
+	"Resources" : {
+		"CSVBucket" : {
+			  "Type" : "AWS::S3::Bucket"
+			  },			  
+		"EventQueue" : {
+			"Type" : "AWS::SQS::Queue",
+			"Properties" : {
+				"VisibilityTimeout" : "30"
+				}
+			}
+	}
+}
